@@ -6,6 +6,9 @@ target 'WeatherMate' do
   use_frameworks!
 
   # Pods for WeatherMate
+  # UI
   pod 'SnapKit', '~> 5.6.0'
+  # Network
+  pod 'Alamofire'
   
 end
