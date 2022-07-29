@@ -11,8 +11,11 @@ class HomeViewModel {
     // MARK: Properties
     private var weatherService: WeatherService?
     
-    var weatherdata: WeatherData? {
-        didSet {self.didFinishFetch?()}
+    var weatherdata: [Weather] = [] {
+        didSet {
+            self.didFinishFetch?()
+            
+        }
     }
     
     var error: Error? {
@@ -26,9 +29,6 @@ class HomeViewModel {
     init(weatherService: WeatherService) {
         self.weatherService = weatherService
     }
-    
-    var date: String?
-    var temp: Float?
     
     // MARK: - Closures for callback, since we are not using the ViewModel to the View.
     var showAlertClosure: (() -> ())?
@@ -45,11 +45,27 @@ class HomeViewModel {
                 return
             }
             
-            if let wData = data?.data {
-                for singleData in wData {
-                    dump(singleData.temp)
-                    self.temp = singleData.temp
+            if var wData = data?.data {
+                wData = wData.map{ weather in
+                    var tempData = weather
+                    
+                    switch tempData.weather?.code {
+                        case 200:
+                            tempData.weather?.description = "천둥번개, 비 적음"
+                            break
+                        case 500:
+                            tempData.weather?.description = "비 적음"
+                            break
+                        default:
+                            tempData.weather?.description = "맑음"
+                            break
+                    }
+                    
+                    return tempData
+                    
                 }
+                
+                self.weatherdata = wData
             }
         })
     }

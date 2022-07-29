@@ -16,6 +16,16 @@ class HomeViewController: UIViewController {
     private let locationLabel = UILabel()
     private let dateLabel = UILabel()
     private let todayWeatherContainer = UIView()
+    private let todayWeatherTitle = UILabel()
+    private let todayWeatherIcon = UIImageView()
+    private let todayWeatherTemp = UILabel()
+    private let todayWeatherDescript = UILabel()
+    private let todayWeatherWindSpeedIcon = UIImageView()
+    private let todayWeatherWindSpeed = UILabel()
+    private let todayWeatherCloudsIcon = UIImageView()
+    private let todayWeatherClouds = UILabel()
+    private let todayWeatherSnowIcon = UIImageView()
+    private let todayWeatherSnow = UILabel()
     
     // MARK: - View Model
     let viewModel = HomeViewModel(weatherService: WeatherService())
@@ -23,7 +33,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        setWeatherDailyData()
+//        setWeatherDailyData()
     }
     
     // MARK: - Networking
@@ -41,18 +51,32 @@ class HomeViewController: UIViewController {
         }
         
         viewModel.didFinishFetch = {
-//            dateLabel.text = viewModel.titleString
-//            self.subtitleLabel.text = self.viewModel.albumIdString
-//            self.headerImageView.sd_setImage(with: self.viewModel.photoUrl, completed: nil)
+            let todayWeather = self.viewModel.weatherdata.first
+            
+            self.dateLabel.text = todayWeather?.validDate
+            self.todayWeatherTitle.text = "오늘"
+            self.todayWeatherIcon.image = UIImage(named: "t01d")
+            self.todayWeatherTemp.text = "\(todayWeather?.temp ?? 0)°C"
+            self.todayWeatherDescript.text = todayWeather?.weather?.description
+            self.todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
+            self.todayWeatherWindSpeed.text = "\(todayWeather?.windSpeed ?? 0) km/h"
+            self.todayWeatherCloudsIcon.image = UIImage(named: "clouds")
+            self.todayWeatherClouds.text = "\(todayWeather?.clouds ?? 0)%"
+            self.todayWeatherSnowIcon.image = UIImage(named: "snow")
+            self.todayWeatherSnow.text = "\(todayWeather?.snow ?? 0)%"
         }
     }
 
     // MARK: - UI
     private func setUI() {
+        // add views
         self.view.addSubViews([locationSearchContainer, locationLabel, dateLabel, todayWeatherContainer])
         
         locationSearchContainer.addSubViews([locationSearchInput, locationSearchIcon, locationSearchButton])
         
+        todayWeatherContainer.addSubViews([todayWeatherTitle, todayWeatherIcon, todayWeatherTemp, todayWeatherDescript, todayWeatherWindSpeedIcon, todayWeatherWindSpeed, todayWeatherCloudsIcon, todayWeatherClouds, todayWeatherSnowIcon, todayWeatherSnow])
+        
+        // constraints
         locationSearchContainer.snp.makeConstraints{(make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(15)
@@ -98,27 +122,101 @@ class HomeViewController: UIViewController {
             make.height.equalTo(320)
         }
         
-        self.view.backgroundColor = .white
+        todayWeatherTitle.snp.makeConstraints{(make) in
+            make.top.equalToSuperview().offset(12)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(50)
+        }
         
-        locationSearchContainer.backgroundColor = .red
+        todayWeatherIcon.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherTitle.snp.bottom)
+            make.leading.equalToSuperview().offset(60)
+        }
+
+        todayWeatherTemp.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherTitle.snp.bottom).offset(15)
+            make.leading.equalToSuperview().offset(190)
+        }
+
+        todayWeatherDescript.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherTemp.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(190)
+        }
+
+        todayWeatherWindSpeedIcon.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherIcon.snp.bottom)
+            make.width.height.equalTo(80)
+        }
+
+        todayWeatherWindSpeed.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherWindSpeedIcon.snp.bottom).offset(8)
+            make.centerX.equalTo(todayWeatherWindSpeedIcon.snp.centerX)
+        }
+
+        todayWeatherCloudsIcon.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherIcon.snp.bottom)
+            make.width.height.equalTo(80)
+            make.leading.equalTo(todayWeatherWindSpeedIcon.snp.trailing).offset(20)
+            make.centerX.equalToSuperview()
+        }
+
+        todayWeatherClouds.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherCloudsIcon.snp.bottom).offset(8)
+            make.centerX.equalTo(todayWeatherCloudsIcon.snp.centerX)
+        }
+
+        todayWeatherSnowIcon.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherIcon.snp.bottom)
+            make.width.height.equalTo(80)
+            make.leading.equalTo(todayWeatherCloudsIcon.snp.trailing).offset(20)
+        }
+
+        todayWeatherSnow.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherSnowIcon.snp.bottom).offset(8)
+            make.centerX.equalTo(todayWeatherSnowIcon.snp.centerX)
+        }
         
-        locationSearchInput.backgroundColor = .black
-        
-        locationSearchIcon.backgroundColor = .red
-        
-        locationSearchButton.backgroundColor = .gray
-        
-        locationLabel.backgroundColor = .orange
-        locationLabel.text = "대한민국"
-        locationLabel.textAlignment = .center
+        // font
         locationLabel.font = UIFont.boldSystemFont(ofSize: 28)
-        
-        
-        dateLabel.backgroundColor = .yellow
-        dateLabel.textAlignment = .center
         dateLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        todayWeatherTitle.font = UIFont.boldSystemFont(ofSize: 30)
+        todayWeatherTemp.font = UIFont.systemFont(ofSize: 34)
+        todayWeatherDescript.font = UIFont.systemFont(ofSize: 18)
         
-        todayWeatherContainer.backgroundColor = .green
+        // backgroundcolor
+        self.view.backgroundColor = .white
+        locationSearchContainer.backgroundColor = .red
+        locationSearchInput.backgroundColor = .black
+        locationSearchIcon.backgroundColor = .red
+        locationSearchButton.backgroundColor = .gray
+//        todayWeatherContainer.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
+        todayWeatherContainer.setGradient(color1: UIColor.blue, color2: UIColor.black)
+        
+        // textalign
+        locationLabel.textAlignment = .center
+        dateLabel.textAlignment = .center
+        todayWeatherTitle.textAlignment = .center
+        
+        // etc
+        todayWeatherContainer.layer.cornerRadius = 20
+        
+        
+        
+        
+        // MARK: 삭제할 부분
+        locationLabel.text = "대한민국"
+        dateLabel.text = "2022-07-29"
+        todayWeatherTitle.text = "오늘"
+        todayWeatherIcon.image = UIImage(named: "t01d")
+        todayWeatherTemp.text = "30°C"
+        todayWeatherDescript.text = "구름 많음"
+        todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
+        todayWeatherWindSpeed.text = "1.3 km/h"
+        todayWeatherCloudsIcon.image = UIImage(named: "clouds")
+        todayWeatherClouds.text = "86%"
+        todayWeatherSnowIcon.image = UIImage(named: "snow")
+        todayWeatherSnow.text = "0%"
     }
     
     private func activityIndicatorStart() {
