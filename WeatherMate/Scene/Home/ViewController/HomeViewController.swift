@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     private let locationSearchButton = UIButton()
     private let locationLabel = UILabel()
     private let dateLabel = UILabel()
-    private let todayWeatherContainer = UIView()
+    private let todayWeatherContainer = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 320))
     private let todayWeatherTitle = UILabel()
     private let todayWeatherIcon = UIImageView()
     private let todayWeatherTemp = UILabel()
@@ -119,7 +119,6 @@ class HomeViewController: UIViewController {
             make.top.equalTo(dateLabel.snp.bottom).offset(25)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
-            make.height.equalTo(320)
         }
         
         todayWeatherTitle.snp.makeConstraints{(make) in
@@ -186,12 +185,7 @@ class HomeViewController: UIViewController {
         
         // backgroundcolor
         self.view.backgroundColor = .white
-        locationSearchContainer.backgroundColor = .red
-        locationSearchInput.backgroundColor = .black
-        locationSearchIcon.backgroundColor = .red
-        locationSearchButton.backgroundColor = .gray
-//        todayWeatherContainer.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
-        todayWeatherContainer.setGradient(color1: UIColor.blue, color2: UIColor.black)
+        todayWeatherContainer.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
         
         // textalign
         locationLabel.textAlignment = .center
@@ -201,10 +195,11 @@ class HomeViewController: UIViewController {
         // etc
         todayWeatherContainer.layer.cornerRadius = 20
         
-        
-        
-        
         // MARK: 삭제할 부분
+//        locationSearchContainer.backgroundColor = .red
+//        locationSearchInput.backgroundColor = .black
+//        locationSearchIcon.backgroundColor = .red
+//        locationSearchButton.backgroundColor = .gray
         locationLabel.text = "대한민국"
         dateLabel.text = "2022-07-29"
         todayWeatherTitle.text = "오늘"
