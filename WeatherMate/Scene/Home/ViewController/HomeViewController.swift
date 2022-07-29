@@ -15,7 +15,8 @@ class HomeViewController: UIViewController {
     private let locationSearchButton = UIButton()
     private let locationLabel = UILabel()
     private let dateLabel = UILabel()
-    private let todayWeatherContainer = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 320))
+//    private let todayWeatherContainer = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 320))
+    private let todayWeatherContainer = UIView()
     private let todayWeatherTitle = UILabel()
     private let todayWeatherIcon = UIImageView()
     private let todayWeatherTemp = UILabel()
@@ -119,10 +120,11 @@ class HomeViewController: UIViewController {
             make.top.equalTo(dateLabel.snp.bottom).offset(25)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
+            make.height.equalTo(320)
         }
         
         todayWeatherTitle.snp.makeConstraints{(make) in
-            make.top.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(50)
@@ -176,18 +178,27 @@ class HomeViewController: UIViewController {
             make.centerX.equalTo(todayWeatherSnowIcon.snp.centerX)
         }
         
-        // font
+        // fontSize
         locationLabel.font = UIFont.boldSystemFont(ofSize: 28)
         dateLabel.font = UIFont.boldSystemFont(ofSize: 22)
         todayWeatherTitle.font = UIFont.boldSystemFont(ofSize: 30)
         todayWeatherTemp.font = UIFont.systemFont(ofSize: 34)
         todayWeatherDescript.font = UIFont.systemFont(ofSize: 18)
         
-        // backgroundcolor
-        self.view.backgroundColor = .white
-        todayWeatherContainer.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
+        // fontColor
+        todayWeatherTitle.textColor = .white
+        todayWeatherTemp.textColor = .white
+        todayWeatherDescript.textColor = .white
+        todayWeatherWindSpeed.textColor = .white
+        todayWeatherClouds.textColor = .white
+        todayWeatherSnow.textColor = .white
         
-        // textalign
+        // backgroundColor
+        self.view.backgroundColor = .white
+        todayWeatherContainer.backgroundColor = UIColor(hexString: "#6290E5")
+//        todayWeatherContainer.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
+        
+        // textAlign
         locationLabel.textAlignment = .center
         dateLabel.textAlignment = .center
         todayWeatherTitle.textAlignment = .center
