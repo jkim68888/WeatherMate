@@ -49,23 +49,30 @@ class HomeViewModel {
                 wData = wData.map{ weather in
                     var tempData = weather
                     
-                    switch tempData.weather?.code {
+                    switch tempData.weather.code {
                         case 200:
-                            tempData.weather?.description = "천둥번개, 비 적음"
+                            tempData.weather.description = "천둥번개, 비 적음"
                             break
                         case 500:
-                            tempData.weather?.description = "비 적음"
+                            tempData.weather.description = "비 적음"
                             break
                         default:
-                            tempData.weather?.description = "맑음"
+                            tempData.weather.description = "맑음"
                             break
                     }
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: "ko_KR")
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let date = dateFormatter.date(from: tempData.validDate)!
+                    
+                    tempData.validDate = "\(Utils.getDayOfWeek(date: date))요일"
                     
                     return tempData
                     
                 }
                 
-                self.weatherdata = wData
+                self.weatherdata = Array(wData[0...7])
             }
         })
     }

@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class HomeViewController: UIViewController {
+
     private let locationSearchContainer = UIView()
     private let locationSearchInput = UITextField()
     private let locationSearchIcon = UIImageView()
@@ -27,6 +28,9 @@ class HomeViewController: UIViewController {
     private let todayWeatherClouds = UILabel()
     private let todayWeatherSnowIcon = UIImageView()
     private let todayWeatherSnow = UILabel()
+    private let dailyTableView = UITableView()
+    
+    private var dailyWeather: [Weather] = []
     
     // MARK: - View Model
     let viewModel = HomeViewModel(weatherService: WeatherService())
@@ -34,7 +38,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-//        setWeatherDailyData()
+        setWeatherDailyData()
     }
     
     // MARK: - Networking
@@ -53,29 +57,37 @@ class HomeViewController: UIViewController {
         
         viewModel.didFinishFetch = {
             let todayWeather = self.viewModel.weatherdata.first
+            self.dailyWeather = Array(self.viewModel.weatherdata[1...7])
             
-            self.dateLabel.text = todayWeather?.validDate
+            self.dateLabel.text = todayWeather?.datetime
             self.todayWeatherTitle.text = "오늘"
             self.todayWeatherIcon.image = UIImage(named: "t01d")
             self.todayWeatherTemp.text = "\(todayWeather?.temp ?? 0)°C"
-            self.todayWeatherDescript.text = todayWeather?.weather?.description
+            self.todayWeatherDescript.text = todayWeather?.weather.description
             self.todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
             self.todayWeatherWindSpeed.text = "\(todayWeather?.windSpeed ?? 0) km/h"
             self.todayWeatherCloudsIcon.image = UIImage(named: "clouds")
             self.todayWeatherClouds.text = "\(todayWeather?.clouds ?? 0)%"
             self.todayWeatherSnowIcon.image = UIImage(named: "snow")
             self.todayWeatherSnow.text = "\(todayWeather?.snow ?? 0)%"
+            
+            self.dailyTableView.reloadData()
         }
     }
 
     // MARK: - UI
     private func setUI() {
         // add views
-        self.view.addSubViews([locationSearchContainer, locationLabel, dateLabel, todayWeatherContainer])
+        self.view.addSubViews([locationSearchContainer, locationLabel, dateLabel, todayWeatherContainer, dailyTableView])
         
         locationSearchContainer.addSubViews([locationSearchInput, locationSearchIcon, locationSearchButton])
         
         todayWeatherContainer.addSubViews([todayWeatherTitle, todayWeatherIcon, todayWeatherTemp, todayWeatherDescript, todayWeatherWindSpeedIcon, todayWeatherWindSpeed, todayWeatherCloudsIcon, todayWeatherClouds, todayWeatherSnowIcon, todayWeatherSnow])
+        
+        self.dailyTableView.delegate = self
+        self.dailyTableView.dataSource = self
+        
+        self.dailyTableView.register(DailyTableViewCell.self, forCellReuseIdentifier: DailyTableViewCell.identifier)
         
         // constraints
         locationSearchContainer.snp.makeConstraints{(make) in
@@ -178,6 +190,13 @@ class HomeViewController: UIViewController {
             make.centerX.equalTo(todayWeatherSnowIcon.snp.centerX)
         }
         
+        dailyTableView.snp.makeConstraints{(make) in
+            make.top.equalTo(todayWeatherContainer.snp.bottom).offset(10)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         // fontSize
         locationLabel.font = UIFont.boldSystemFont(ofSize: 28)
         dateLabel.font = UIFont.boldSystemFont(ofSize: 22)
@@ -239,3 +258,23 @@ class HomeViewController: UIViewController {
 
 }
 
+extension HomeViewController: UITableViewDelegate {
+    
+}
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dailyWeather.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: DailyTableViewCell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as! DailyTableViewCell
+                
+        cell.leftLabel.text = "\(dailyWeather[indexPath.row].validDate)"
+        cell.selectionStyle = .none
+                
+        return cell
+    }
+    
+    
+}

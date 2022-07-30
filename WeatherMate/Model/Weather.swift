@@ -16,19 +16,19 @@ struct WeatherData: Codable {
 }
 
 struct Weather: Codable {
-    var validDate: String?
-    var timeStamp: TimeInterval?
-    var temp: Float?
-    var highTemp: Float?
-    var lowTemp: Float?
-    var windSpeed: Float?
-    var clouds: Int?
-    var snow: Int?
-    var weather: WeatherInfo?
+    var validDate: String
+    var datetime: String
+    var temp: Float
+    var highTemp: Float
+    var lowTemp: Float
+    var windSpeed: Float
+    var clouds: Int
+    var snow: Int
+    var weather: WeatherInfo
     
     enum CodingKeys: String, CodingKey {
         case validDate = "valid_date"
-        case timeStamp = "ts"
+        case datetime = "datetime"
         case temp = "temp"
         case highTemp = "high_temp"
         case lowTemp = "low_temp"
@@ -40,9 +40,9 @@ struct Weather: Codable {
 }
 
 struct WeatherInfo: Codable {
-    var icon: String?
-    var code: Int?
-    var description: String?
+    var icon: String
+    var code: Int
+    var description: String
     
     enum CodingKeys: String, CodingKey {
         case icon = "icon"

@@ -17,6 +17,8 @@
 		9A724B5F28919B530079A675 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B5E28919B530079A675 /* Weather.swift */; };
 		9A724B632891A1F60079A675 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B622891A1F60079A675 /* HomeViewModel.swift */; };
 		9A724B652893A4660079A675 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B642893A4660079A675 /* UIColorExtension.swift */; };
+		9A724B68289549450079A675 /* DailyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B67289549450079A675 /* DailyTableViewCell.swift */; };
+		9A724B6B28955E540079A675 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B6A28955E540079A675 /* Utils.swift */; };
 		E175D47CBB7B93388EA15C90 /* Pods_WeatherMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80334431462F920D88E1EC21 /* Pods_WeatherMate.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		9A724B5E28919B530079A675 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		9A724B622891A1F60079A675 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9A724B642893A4660079A675 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		9A724B67289549450079A675 /* DailyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTableViewCell.swift; sourceTree = "<group>"; };
+		9A724B6A28955E540079A675 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C530724FD6AA9A483A3B8CCE /* Pods-WeatherMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMate.debug.xcconfig"; path = "Target Support Files/Pods-WeatherMate/Pods-WeatherMate.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +92,7 @@
 		9A724B3E289132E80079A675 /* WeatherMate */ = {
 			isa = PBXGroup;
 			children = (
+				9A724B6928955E460079A675 /* Common */,
 				9A724B5828918F500079A675 /* Scene */,
 				9A724B5728918F4A0079A675 /* Model */,
 				9A724B5628918F450079A675 /* Service */,
@@ -145,6 +150,7 @@
 		9A724B5A28918F6D0079A675 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9A724B66289549150079A675 /* Cell */,
 				9A724B5B28918F850079A675 /* ViewController */,
 				9A724B5928918F580079A675 /* ViewModel */,
 			);
@@ -157,6 +163,22 @@
 				9A724B43289132E80079A675 /* HomeViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9A724B66289549150079A675 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9A724B67289549450079A675 /* DailyTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		9A724B6928955E460079A675 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9A724B6A28955E540079A675 /* Utils.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,10 +295,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A724B68289549450079A675 /* DailyTableViewCell.swift in Sources */,
 				9A724B5D289198610079A675 /* WeatherService.swift in Sources */,
 				9A724B44289132E80079A675 /* HomeViewController.swift in Sources */,
 				9A724B632891A1F60079A675 /* HomeViewModel.swift in Sources */,
 				9A724B652893A4660079A675 /* UIColorExtension.swift in Sources */,
+				9A724B6B28955E540079A675 /* Utils.swift in Sources */,
 				9A724B40289132E80079A675 /* AppDelegate.swift in Sources */,
 				9A724B5428913BAB0079A675 /* UIViewExtension.swift in Sources */,
 				9A724B5F28919B530079A675 /* Weather.swift in Sources */,
