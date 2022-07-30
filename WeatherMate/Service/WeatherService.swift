@@ -23,9 +23,10 @@ struct WeatherService {
     
     // MARK: - pathUrl
     private let dailyPath = "/forecast/daily"
+    private let hourlyPath = "/forecast/hourly"
     
     // MARK: - Services
-    func requestDaily(lat: Float, lon: Float, completion: @escaping (WeatherData?, Error?) -> ()){
+    func requestDaily(lat: Float, lon: Float, completion: @escaping (DailyWeatherData?, Error?) -> ()){
         
         let queryItems = [URLQueryItem(name: "lat", value: String(lat)), URLQueryItem(name: "lon", value: String(lon))]
         
@@ -33,7 +34,7 @@ struct WeatherService {
         
         urlComps.queryItems = queryItems
         
-        AF.request(urlComps, headers: headers).responseDecodable(of: WeatherData.self) { (response) in
+        AF.request(urlComps, headers: headers).responseDecodable(of: DailyWeatherData.self) { (response) in
             if let error = response.error {
                 print("service error : ", error)
                 completion(nil, error)
@@ -42,6 +43,28 @@ struct WeatherService {
 
             if let dailyData = response.value {
                 completion(dailyData, nil)
+                return
+            }
+        }
+    }
+    
+    func requestHourly(lat: Float, lon: Float, completion: @escaping (HourlyWeatherData?, Error?) -> ()){
+        
+        let queryItems = [URLQueryItem(name: "lat", value: String(lat)), URLQueryItem(name: "lon", value: String(lon))]
+        
+        var urlComps = URLComponents(string: "\(baseUrl)\(hourlyPath)")!
+        
+        urlComps.queryItems = queryItems
+        
+        AF.request(urlComps, headers: headers).responseDecodable(of: HourlyWeatherData.self) { (response) in
+            if let error = response.error {
+                print("service error : ", error)
+                completion(nil, error)
+                return
+            }
+
+            if let hourlyData = response.value {
+                completion(hourlyData, nil)
                 return
             }
         }

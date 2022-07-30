@@ -11,10 +11,15 @@ class HomeViewModel {
     // MARK: Properties
     private var weatherService: WeatherService?
     
-    var weatherdata: [Weather] = [] {
+    var dailyWeatherData: [DailyWeather] = [] {
         didSet {
             self.didFinishFetch?()
-            
+        }
+    }
+    
+    var hourlyWeatherData: [HourlyWeather] = [] {
+        didSet {
+            self.didFinishFetch?()
         }
     }
     
@@ -72,7 +77,30 @@ class HomeViewModel {
                     
                 }
                 
-                self.weatherdata = Array(wData[0...7])
+                self.dailyWeatherData = Array(wData[0...7])
+            }
+        })
+    }
+    
+    func fetchWeatherHourly(lat: Float, lon: Float) {
+        self.weatherService?.requestHourly(lat: lat, lon: lon, completion: { (data, error) in
+            if let error = error {
+                print("viewmodel error : ", error)
+                self.error = error
+                self.isLoading = false
+                return
+            }
+            
+            if var wData = data?.data {
+                wData = wData.map{ weather in
+                    var tempData = weather
+                    
+                    
+                    return tempData
+                    
+                }
+                
+                self.hourlyWeatherData = wData
             }
         })
     }

@@ -7,15 +7,23 @@
 
 import Foundation
 
-struct WeatherData: Codable {
-    let data: [Weather]
+struct DailyWeatherData: Codable {
+    let data: [DailyWeather]
     
     enum CodingKeys: String, CodingKey {
         case data = "data"
     }
 }
 
-struct Weather: Codable {
+struct HourlyWeatherData: Codable {
+    let data: [HourlyWeather]
+    
+    enum CodingKeys: String, CodingKey {
+        case data = "data"
+    }
+}
+
+struct DailyWeather: Codable {
     var validDate: String
     var datetime: String
     var temp: Float
@@ -35,6 +43,18 @@ struct Weather: Codable {
         case windSpeed = "wind_spd"
         case clouds = "clouds"
         case snow = "snow"
+        case weather = "weather"
+    }
+}
+
+struct HourlyWeather: Codable {
+    var timestamp: String
+    var temp: Float
+    var weather: WeatherInfo
+    
+    enum CodingKeys: String, CodingKey {
+        case timestamp = "timestamp_local"
+        case temp = "temp"
         case weather = "weather"
     }
 }

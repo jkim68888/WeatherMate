@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
     private let todayWeatherSnow = UILabel()
     private let dailyTableView = UITableView()
     
-    private var dailyWeather: [Weather] = []
+    private var dailyWeather: [DailyWeather] = []
     
     // MARK: - View Model
     let viewModel = HomeViewModel(weatherService: WeatherService())
@@ -56,8 +56,8 @@ class HomeViewController: UIViewController {
         }
         
         viewModel.didFinishFetch = {
-            let todayWeather = self.viewModel.weatherdata.first
-            self.dailyWeather = Array(self.viewModel.weatherdata[1...7])
+            let todayWeather = self.viewModel.dailyWeatherData.first
+            self.dailyWeather = Array(self.viewModel.dailyWeatherData[1...7])
             
             self.dateLabel.text = todayWeather?.datetime
             self.todayWeatherTitle.text = "오늘"
@@ -192,8 +192,8 @@ class HomeViewController: UIViewController {
         
         dailyTableView.snp.makeConstraints{(make) in
             make.top.equalTo(todayWeatherContainer.snp.bottom).offset(10)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -203,6 +203,9 @@ class HomeViewController: UIViewController {
         todayWeatherTitle.font = UIFont.boldSystemFont(ofSize: 30)
         todayWeatherTemp.font = UIFont.systemFont(ofSize: 34)
         todayWeatherDescript.font = UIFont.systemFont(ofSize: 18)
+        todayWeatherWindSpeed.font = UIFont.systemFont(ofSize: 20)
+        todayWeatherClouds.font = UIFont.systemFont(ofSize: 20)
+        todayWeatherSnow.font = UIFont.systemFont(ofSize: 20)
         
         // fontColor
         todayWeatherTitle.textColor = .white
@@ -230,18 +233,18 @@ class HomeViewController: UIViewController {
 //        locationSearchInput.backgroundColor = .black
 //        locationSearchIcon.backgroundColor = .red
 //        locationSearchButton.backgroundColor = .gray
-        locationLabel.text = "대한민국"
-        dateLabel.text = "2022-07-29"
-        todayWeatherTitle.text = "오늘"
-        todayWeatherIcon.image = UIImage(named: "t01d")
-        todayWeatherTemp.text = "30°C"
-        todayWeatherDescript.text = "구름 많음"
-        todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
-        todayWeatherWindSpeed.text = "1.3 km/h"
-        todayWeatherCloudsIcon.image = UIImage(named: "clouds")
-        todayWeatherClouds.text = "86%"
-        todayWeatherSnowIcon.image = UIImage(named: "snow")
-        todayWeatherSnow.text = "0%"
+//        locationLabel.text = "대한민국"
+//        dateLabel.text = "2022-07-29"
+//        todayWeatherTitle.text = "오늘"
+//        todayWeatherIcon.image = UIImage(named: "t01d")
+//        todayWeatherTemp.text = "30°C"
+//        todayWeatherDescript.text = "구름 많음"
+//        todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
+//        todayWeatherWindSpeed.text = "1.3 km/h"
+//        todayWeatherCloudsIcon.image = UIImage(named: "clouds")
+//        todayWeatherClouds.text = "86%"
+//        todayWeatherSnowIcon.image = UIImage(named: "snow")
+//        todayWeatherSnow.text = "0%"
     }
     
     private func activityIndicatorStart() {
@@ -270,7 +273,11 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: DailyTableViewCell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.identifier, for: indexPath) as! DailyTableViewCell
                 
-        cell.leftLabel.text = "\(dailyWeather[indexPath.row].validDate)"
+        cell.weekdayLabel.text = "\(dailyWeather[indexPath.row].validDate)"
+        cell.lowTempLabel.text = "\(dailyWeather[indexPath.row].lowTemp)°C"
+        cell.highTempLabel.text = "\(dailyWeather[indexPath.row].highTemp)°C"
+//        cell.weatherImg.image = UIImage(named: "\(dailyWeather[indexPath.row].weather.icon)")
+        cell.weatherImg.image = UIImage(named: "t01d")
         cell.selectionStyle = .none
                 
         return cell
