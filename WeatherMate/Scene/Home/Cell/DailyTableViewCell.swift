@@ -49,7 +49,7 @@ class DailyTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15))
     }
 
     required init?(coder: NSCoder) {
@@ -93,7 +93,7 @@ class DailyTableViewCell: UITableViewCell {
         
         weatherImg.snp.makeConstraints{(make) in
             make.centerY.equalToSuperview().offset(-5)
-            make.trailing.equalToSuperview().offset(-30)
+            make.trailing.equalToSuperview().offset(-45)
             make.width.height.equalTo(50)
         }
         

@@ -19,6 +19,7 @@
 		9A724B652893A4660079A675 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B642893A4660079A675 /* UIColorExtension.swift */; };
 		9A724B68289549450079A675 /* DailyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B67289549450079A675 /* DailyTableViewCell.swift */; };
 		9A724B6B28955E540079A675 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B6A28955E540079A675 /* Utils.swift */; };
+		9A724B7228957E0F0079A675 /* HomeTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B7128957E0F0079A675 /* HomeTableHeaderCell.swift */; };
 		E175D47CBB7B93388EA15C90 /* Pods_WeatherMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80334431462F920D88E1EC21 /* Pods_WeatherMate.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		9A724B642893A4660079A675 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		9A724B67289549450079A675 /* DailyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTableViewCell.swift; sourceTree = "<group>"; };
 		9A724B6A28955E540079A675 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		9A724B7128957E0F0079A675 /* HomeTableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableHeaderCell.swift; sourceTree = "<group>"; };
 		C530724FD6AA9A483A3B8CCE /* Pods-WeatherMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMate.debug.xcconfig"; path = "Target Support Files/Pods-WeatherMate/Pods-WeatherMate.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 		9A724B5A28918F6D0079A675 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9A724B6E28957C8F0079A675 /* View */,
 				9A724B66289549150079A675 /* Cell */,
 				9A724B5B28918F850079A675 /* ViewController */,
 				9A724B5928918F580079A675 /* ViewModel */,
@@ -169,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				9A724B67289549450079A675 /* DailyTableViewCell.swift */,
+				9A724B7128957E0F0079A675 /* HomeTableHeaderCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -179,6 +183,13 @@
 				9A724B6A28955E540079A675 /* Utils.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		9A724B6E28957C8F0079A675 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +311,7 @@
 				9A724B44289132E80079A675 /* HomeViewController.swift in Sources */,
 				9A724B632891A1F60079A675 /* HomeViewModel.swift in Sources */,
 				9A724B652893A4660079A675 /* UIColorExtension.swift in Sources */,
+				9A724B7228957E0F0079A675 /* HomeTableHeaderCell.swift in Sources */,
 				9A724B6B28955E540079A675 /* Utils.swift in Sources */,
 				9A724B40289132E80079A675 /* AppDelegate.swift in Sources */,
 				9A724B5428913BAB0079A675 /* UIViewExtension.swift in Sources */,
