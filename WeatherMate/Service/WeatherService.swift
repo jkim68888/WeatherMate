@@ -48,9 +48,13 @@ struct WeatherService {
         }
     }
     
-    func requestHourly(lat: Float, lon: Float, completion: @escaping (HourlyWeatherData?, Error?) -> ()){
+    func requestHourly(lat: Float, lon: Float, hours: String, completion: @escaping (HourlyWeatherData?, Error?) -> ()){
         
-        let queryItems = [URLQueryItem(name: "lat", value: String(lat)), URLQueryItem(name: "lon", value: String(lon))]
+        let queryItems = [
+            URLQueryItem(name: "lat", value: String(lat)),
+            URLQueryItem(name: "lon", value: String(lon)),
+            URLQueryItem(name: "hours", value: hours)
+        ]
         
         var urlComps = URLComponents(string: "\(baseUrl)\(hourlyPath)")!
         

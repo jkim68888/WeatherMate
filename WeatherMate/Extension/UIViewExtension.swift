@@ -15,15 +15,14 @@ extension UIView {
         }
     }
     
-    func setGradient(color1:UIColor,color2:UIColor){
+    func setGradient(color1: UIColor, color2: UIColor, startPoint: CGPoint, endPoint: CGPoint, radius: CGFloat){
         let gradient: CAGradientLayer = CAGradientLayer()
         gradient.colors = [color1.cgColor,color2.cgColor]
         gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradient.startPoint = startPoint
+        gradient.endPoint = endPoint
         gradient.frame = bounds
-        gradient.cornerRadius = 20
-//        layer.insertSublayer(layer, at: 0)
+        gradient.cornerRadius = radius
         layer.addSublayer(gradient)
     }
 }

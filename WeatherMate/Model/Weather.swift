@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct WeatherWrapper: Codable {
+    var daily: DailyWeather?
+    var hourly: [HourlyWeather]?
+}
+
 struct DailyWeatherData: Codable {
     let data: [DailyWeather]
     

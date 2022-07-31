@@ -178,18 +178,10 @@ class HomeTableHeaderCell: UITableViewCell {
         todayWeatherClouds.textColor = .white
         todayWeatherSnow.textColor = .white
         
-        // backgroundColor
-        self.layoutIfNeeded()
-        print("dd",todayWeatherContainerBg.frame)
-        
-        
         // textAlign
         locationLabel.textAlignment = .center
         dateLabel.textAlignment = .center
         todayWeatherTitle.textAlignment = .center
-        
-        // etc
-        
         
         // MARK: 삭제할 부분
         locationLabel.text = "대한민국"
@@ -205,8 +197,9 @@ class HomeTableHeaderCell: UITableViewCell {
 //        todayWeatherSnowIcon.image = UIImage(named: "snow")
 //        todayWeatherSnow.text = "0%"
         
+        // dispatchQueue : 맨 마지막에 실행되는 속성이 있음
         DispatchQueue.main.async() {
-            self.todayWeatherContainerBg.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"))
+            self.todayWeatherContainerBg.setGradient(color1: UIColor(hexString: "#9CC1F4"), color2: UIColor(hexString: "#6290E5"), startPoint: CGPoint(x: 0.5, y: 0.0), endPoint: CGPoint(x: 0.5, y: 1.0), radius: CGFloat(20))
         }
     }
     

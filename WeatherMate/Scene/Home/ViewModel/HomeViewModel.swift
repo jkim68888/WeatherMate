@@ -11,15 +11,17 @@ class HomeViewModel {
     // MARK: Properties
     private var weatherService: WeatherService?
     
+    var weatherWrapperList: [WeatherWrapper] = []
+    
     var dailyWeatherData: [DailyWeather] = [] {
         didSet {
-            self.didFinishFetch?()
+           dataAllSet()
         }
     }
     
     var hourlyWeatherData: [HourlyWeather] = [] {
         didSet {
-            self.didFinishFetch?()
+            dataAllSet()
         }
     }
     
@@ -39,6 +41,20 @@ class HomeViewModel {
     var showAlertClosure: (() -> ())?
     var updateLoadingStatus: (() -> ())?
     var didFinishFetch: (() -> ())?
+    
+    func dataAllSet() {
+        guard dailyWeatherData.count != 0 && hourlyWeatherData.count != 0 else { return }
+        for i in 0..<dailyWeatherData.count {
+            if i == 0 {
+                weatherWrapperList.append(WeatherWrapper(daily: dailyWeatherData[i], hourly: nil))
+                weatherWrapperList.append(WeatherWrapper(daily: nil, hourly: hourlyWeatherData))
+            } else {
+                weatherWrapperList.append(WeatherWrapper(daily: dailyWeatherData[i], hourly: nil))
+            }
+                
+        }
+        self.didFinishFetch?()
+    }
     
     // MARK: - Network Call
     func fetchWeatherDaily(lat: Float, lon: Float) {
@@ -82,8 +98,8 @@ class HomeViewModel {
         })
     }
     
-    func fetchWeatherHourly(lat: Float, lon: Float) {
-        self.weatherService?.requestHourly(lat: lat, lon: lon, completion: { (data, error) in
+    func fetchWeatherHourly(lat: Float, lon: Float, hours: String) {
+        self.weatherService?.requestHourly(lat: lat, lon: lon, hours: hours, completion: { (data, error) in
             if let error = error {
                 print("viewmodel error : ", error)
                 self.error = error

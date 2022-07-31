@@ -11,36 +11,15 @@ import SnapKit
 class DailyTableViewCell: UITableViewCell {
     static let identifier = "dailyTableViewCell"
     
-    lazy var weekdayLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    lazy var tempContainer: UIView = {
-        let container = UIView()
-        return container
-    }()
-    
-    lazy var lowTempLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    lazy var tempDivisionLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    lazy var highTempLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    lazy var weatherImg: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
-    
+    let dailyCellContainerBg = UIView()
+    let dailyCellContainer = UIView()
+    let weekdayLabel = UILabel()
+    let tempContainer = UIView()
+    let lowTempLabel = UILabel()
+    let tempDivisionLabel = UILabel()
+    let highTempLabel = UILabel()
+    let weatherImg = UIImageView()
+   
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
@@ -57,23 +36,30 @@ class DailyTableViewCell: UITableViewCell {
     }
     
     func setUI() {
-        self.contentView.addSubViews([weekdayLabel, weekdayLabel, tempContainer, weatherImg])
+        self.contentView.addSubViews([dailyCellContainerBg, dailyCellContainer])
+        
+        dailyCellContainer.addSubViews([weekdayLabel, weekdayLabel, tempContainer, weatherImg])
+        
         tempContainer.addSubViews([lowTempLabel, tempDivisionLabel, highTempLabel])
         
-        contentView.snp.makeConstraints{(make) in
+        dailyCellContainerBg.snp.makeConstraints{(make) in
             make.height.equalTo(85)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.edges.equalToSuperview()
+        }
+        
+        dailyCellContainer.snp.makeConstraints{(make) in
+            make.height.equalTo(85)
+            make.edges.equalToSuperview()
         }
         
         weekdayLabel.snp.makeConstraints{(make) in
-            make.centerY.equalToSuperview().offset(-5)
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(30)
         }
         
         tempContainer.snp.makeConstraints{(make) in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-5)
+            make.centerY.equalToSuperview()
             make.width.equalTo(150)
         }
         
@@ -92,13 +78,11 @@ class DailyTableViewCell: UITableViewCell {
         }
         
         weatherImg.snp.makeConstraints{(make) in
-            make.centerY.equalToSuperview().offset(-5)
-            make.trailing.equalToSuperview().offset(-45)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-30)
             make.width.height.equalTo(50)
         }
         
-        contentView.backgroundColor = UIColor(hexString: "#6290E5")
-        contentView.layer.cornerRadius = 12
         tempDivisionLabel.text = "|"
         weekdayLabel.textColor = .white
         lowTempLabel.textColor = .white
@@ -107,6 +91,9 @@ class DailyTableViewCell: UITableViewCell {
         weekdayLabel.font = UIFont.boldSystemFont(ofSize: 20)
         lowTempLabel.font = UIFont.boldSystemFont(ofSize: 18)
         highTempLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        DispatchQueue.main.async() {
+            self.dailyCellContainerBg.setGradient(color1: UIColor(hexString: "#A3CAF6"), color2: UIColor(hexString: "#738BE8"), startPoint: CGPoint(x: 0.0, y: 0.5), endPoint: CGPoint(x: 1.0, y: 0.5), radius: 12)
+        }
     }
-
 }
