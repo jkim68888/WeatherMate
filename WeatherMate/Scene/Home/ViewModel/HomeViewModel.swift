@@ -10,6 +10,9 @@ import Foundation
 class HomeViewModel {
     // MARK: Properties
     private var weatherService: WeatherService?
+    private var locationService: LocationService?
+    
+    var locationData: [LocationData] = []
     
     var weatherWrapperList: [WeatherWrapper] = []
     
@@ -29,8 +32,14 @@ class HomeViewModel {
         didSet { self.showAlertClosure?() }
     }
     
-    init(weatherService: WeatherService) {
+    var city: String = ""
+    var country: String = ""
+    var lat: Float = 0
+    var lon: Float = 0
+    
+    init(weatherService: WeatherService, locationService: LocationService) {
         self.weatherService = weatherService
+        self.locationService = locationService
     }
     
     // MARK: - Closures for callback, since we are not using the ViewModel to the View.
@@ -52,6 +61,26 @@ class HomeViewModel {
     }
     
     // MARK: - Network Call
+    func fetchLocationData(selectedNumber: Int?) {
+        self.locationService?.requestLocationData(selectedNumber: selectedNumber, completion: {(data, error) in
+            if let error = error {
+                print("viewmodel error : ", error)
+                self.error = error
+                return
+            }
+            
+            if let lData = data{
+                self.city = lData[selectedNumber ?? 0].city
+                self.country = lData[selectedNumber ?? 0].country
+                self.lat = lData[selectedNumber ?? 0].lat
+                self.lon = lData[selectedNumber ?? 0].lon
+                
+                return
+            }
+        })
+    }
+    
+    
     func fetchWeatherDaily(lat: Float, lon: Float) {
         self.weatherService?.requestDaily(lat: lat, lon: lon, completion: { (data, error) in
             if let error = error {

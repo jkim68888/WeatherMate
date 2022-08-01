@@ -9,13 +9,14 @@ import UIKit
 import SnapKit
 
 class HomeViewController: UIViewController {
-
     private let dailyTableView = UITableView()
     
     private var weatherWrapperList: [WeatherWrapper] = []
     
+    var selectedNumber: Int = 0
+    
     // MARK: - View Model
-    let viewModel = HomeViewModel(weatherService: WeatherService())
+    let viewModel = HomeViewModel(weatherService: WeatherService(), locationService: LocationService())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +26,9 @@ class HomeViewController: UIViewController {
     
     // MARK: - Networking
     private func requestApi() {
-        viewModel.fetchWeatherDaily(lat: 35.5, lon: -78.5)
-        viewModel.fetchWeatherHourly(lat: 35.5, lon: -78.5, hours: "24")
+        viewModel.fetchLocationData(selectedNumber: selectedNumber)
+        viewModel.fetchWeatherDaily(lat: viewModel.lat, lon: viewModel.lon)
+        viewModel.fetchWeatherHourly(lat: viewModel.lat, lon: viewModel.lon, hours: "24")
         
         viewModel.showAlertClosure = {
             if let error = self.viewModel.error {
@@ -77,6 +79,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             if let daily = weatherWrapperList[indexPath.row].daily {
                 cell.setData(weather: daily)
             }
+            
+            cell.dropDownIndex = self.selectedNumber
             
             return cell
             

@@ -8,6 +8,7 @@ target 'WeatherMate' do
   # Pods for WeatherMate
   # UI
   pod 'SnapKit', '~> 5.6.0'
+  pod 'DropDown'
   # Network
   pod 'Alamofire'
   

@@ -22,6 +22,9 @@
 		9A724B7228957E0F0079A675 /* HomeTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B7128957E0F0079A675 /* HomeTableHeaderCell.swift */; };
 		9A724B7428966FFA0079A675 /* HourlyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B7328966FFA0079A675 /* HourlyTableViewCell.swift */; };
 		9A724B76289678BC0079A675 /* HourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B75289678BC0079A675 /* HourlyCollectionViewCell.swift */; };
+		9A724B7B2897E8B60079A675 /* LocationData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A724B7A2897E8B60079A675 /* LocationData.json */; };
+		9A724B7D2897EB290079A675 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B7C2897EB290079A675 /* Location.swift */; };
+		9A724B7F2897EBE00079A675 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A724B7E2897EBE00079A675 /* LocationService.swift */; };
 		E175D47CBB7B93388EA15C90 /* Pods_WeatherMate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80334431462F920D88E1EC21 /* Pods_WeatherMate.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +48,9 @@
 		9A724B7128957E0F0079A675 /* HomeTableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableHeaderCell.swift; sourceTree = "<group>"; };
 		9A724B7328966FFA0079A675 /* HourlyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyTableViewCell.swift; sourceTree = "<group>"; };
 		9A724B75289678BC0079A675 /* HourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A724B7A2897E8B60079A675 /* LocationData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LocationData.json; sourceTree = "<group>"; };
+		9A724B7C2897EB290079A675 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		9A724B7E2897EBE00079A675 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		C530724FD6AA9A483A3B8CCE /* Pods-WeatherMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherMate.debug.xcconfig"; path = "Target Support Files/Pods-WeatherMate/Pods-WeatherMate.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,7 @@
 		9A724B3E289132E80079A675 /* WeatherMate */ = {
 			isa = PBXGroup;
 			children = (
+				9A724B772897E6730079A675 /* Json */,
 				9A724B6928955E460079A675 /* Common */,
 				9A724B5828918F500079A675 /* Scene */,
 				9A724B5728918F4A0079A675 /* Model */,
@@ -125,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				9A724B5C289198610079A675 /* WeatherService.swift */,
+				9A724B7E2897EBE00079A675 /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -133,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				9A724B5E28919B530079A675 /* Weather.swift */,
+				9A724B7C2897EB290079A675 /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,6 +207,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		9A724B772897E6730079A675 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				9A724B7A2897E8B60079A675 /* LocationData.json */,
+			);
+			path = Json;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -259,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A724B4C289132E80079A675 /* LaunchScreen.storyboard in Resources */,
+				9A724B7B2897E8B60079A675 /* LocationData.json in Resources */,
 				9A724B49289132E80079A675 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +336,8 @@
 				9A724B44289132E80079A675 /* HomeViewController.swift in Sources */,
 				9A724B632891A1F60079A675 /* HomeViewModel.swift in Sources */,
 				9A724B652893A4660079A675 /* UIColorExtension.swift in Sources */,
+				9A724B7D2897EB290079A675 /* Location.swift in Sources */,
+				9A724B7F2897EBE00079A675 /* LocationService.swift in Sources */,
 				9A724B7228957E0F0079A675 /* HomeTableHeaderCell.swift in Sources */,
 				9A724B6B28955E540079A675 /* Utils.swift in Sources */,
 				9A724B40289132E80079A675 /* AppDelegate.swift in Sources */,

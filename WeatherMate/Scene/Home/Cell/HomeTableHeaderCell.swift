@@ -7,14 +7,21 @@
 
 import Foundation
 import SnapKit
+import DropDown
 
 class HomeTableHeaderCell: UITableViewCell {
     static let identifier = "HomeTableHeaderCell"
     
-    private let locationSearchContainer = UIView()
-    private let locationSearchInput = UITextField()
-    private let locationSearchIcon = UIImageView()
-    private let locationSearchButton = UIButton()
+    // MARK: - View Model
+    let viewModel = HomeViewModel(weatherService: WeatherService(), locationService: LocationService())
+    
+    let dropDown = DropDown()
+    
+    var dropDownData: [String] = []
+    
+    var dropDownIndex: Int = 0
+
+    private let dropDownButton = UIButton()
     private let locationLabel = UILabel()
     private let dateLabel = UILabel()
     private let todayWeatherContainerBg = UIView()
@@ -33,6 +40,10 @@ class HomeTableHeaderCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
+        dropDownButton.addTarget(self, action: #selector(dropdownClicked), for: .touchUpInside)
+        dropDownIndex = 0
+        dropDownData = [viewModel.city]
+        dropDown.dataSource = dropDownData
     }
     
     override func layoutSubviews() {
@@ -47,41 +58,20 @@ class HomeTableHeaderCell: UITableViewCell {
  
     private func setUI() {
         // add views
-        self.contentView.addSubViews([locationSearchContainer, locationLabel, dateLabel, todayWeatherContainerBg, todayWeatherContainer])
-        
-        locationSearchContainer.addSubViews([locationSearchInput, locationSearchIcon, locationSearchButton])
+        self.contentView.addSubViews([dropDownButton, locationLabel, dateLabel, todayWeatherContainerBg, todayWeatherContainer])
         
         todayWeatherContainer.addSubViews([todayWeatherTitle, todayWeatherIcon, todayWeatherTemp, todayWeatherDescript, todayWeatherWindSpeedIcon, todayWeatherWindSpeed, todayWeatherCloudsIcon, todayWeatherClouds, todayWeatherSnowIcon, todayWeatherSnow])
         
         // constraints
-        locationSearchContainer.snp.makeConstraints{(make) in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().offset(-15)
-            make.height.equalTo(80)
-        }
-        
-        locationSearchInput.snp.makeConstraints{(make) in
+        dropDownButton.snp.makeConstraints{(make) in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
-            make.height.equalToSuperview()
-        }
-        
-        locationSearchIcon.snp.makeConstraints{(make) in
-            make.leading.equalToSuperview()
-            make.width.height.equalTo(30)
-            make.centerY.equalToSuperview()
-        }
-        
-        locationSearchButton.snp.makeConstraints{(make) in
-            make.leading.equalTo(locationSearchInput.snp.trailing).offset(15)
-            make.trailing.equalToSuperview().offset(-15)
-            make.width.height.equalTo(50)
-            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(70)
         }
         
         locationLabel.snp.makeConstraints{(make) in
-            make.top.equalTo(locationSearchContainer.snp.bottom).offset(10)
+            make.top.equalTo(dropDownButton.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
         }
@@ -169,6 +159,7 @@ class HomeTableHeaderCell: UITableViewCell {
         todayWeatherWindSpeed.font = UIFont.systemFont(ofSize: 20)
         todayWeatherClouds.font = UIFont.systemFont(ofSize: 20)
         todayWeatherSnow.font = UIFont.systemFont(ofSize: 20)
+        dropDownButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 23)
         
         // fontColor
         todayWeatherTitle.textColor = .white
@@ -183,19 +174,12 @@ class HomeTableHeaderCell: UITableViewCell {
         dateLabel.textAlignment = .center
         todayWeatherTitle.textAlignment = .center
         
-        // MARK: 삭제할 부분
+        // etc
+        dropDownButton.backgroundColor = UIColor(hexString: "#5F9CF5")
+        dropDownButton.layer.cornerRadius = 10
+        dropDownButton.semanticContentAttribute = .forceRightToLeft
+        dropDownButton.setTitle(dropDownData[0], for: .normal)
         locationLabel.text = "대한민국"
-//        dateLabel.text = "2022-07-29"
-//        todayWeatherTitle.text = "오늘"
-//        todayWeatherIcon.image = UIImage(named: "t01d")
-//        todayWeatherTemp.text = "30°C"
-//        todayWeatherDescript.text = "구름 많음"
-//        todayWeatherWindSpeedIcon.image = UIImage(named: "wind")
-//        todayWeatherWindSpeed.text = "1.3 km/h"
-//        todayWeatherCloudsIcon.image = UIImage(named: "clouds")
-//        todayWeatherClouds.text = "86%"
-//        todayWeatherSnowIcon.image = UIImage(named: "snow")
-//        todayWeatherSnow.text = "0%"
         
         // dispatchQueue : 맨 마지막에 실행되는 속성이 있음
         DispatchQueue.main.async() {
@@ -204,7 +188,6 @@ class HomeTableHeaderCell: UITableViewCell {
     }
     
     func setData(weather: DailyWeather) {
-        
         self.dateLabel.text = weather.datetime
         self.todayWeatherTitle.text = "오늘"
         self.todayWeatherIcon.image = UIImage(named: "t01d")
@@ -216,5 +199,22 @@ class HomeTableHeaderCell: UITableViewCell {
         self.todayWeatherClouds.text = "\(weather.clouds)%"
         self.todayWeatherSnowIcon.image = UIImage(named: "snow")
         self.todayWeatherSnow.text = "\(weather.snow)%"
+    }
+    
+    func setDropDown() {
+        dropDown.show()
+        dropDown.cornerRadius = 8
+        dropDown.anchorView = dropDownButton
+        dropDown.selectionBackgroundColor = UIColor(hexString: "#5F9CF5")
+        dropDown.selectedTextColor = .white
+        dropDown.bottomOffset = CGPoint(x: 0, y:70)
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            dropDownButton.setTitle("\(item)", for: .normal)
+            dropDownIndex = index
+        }
+    }
+    
+    @objc func dropdownClicked(_ sender: UIButton) {
+        setDropDown()
     }
 }
