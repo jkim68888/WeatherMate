@@ -28,10 +28,6 @@ class HomeViewController: UIViewController {
         viewModel.fetchWeatherDaily(lat: 35.5, lon: -78.5)
         viewModel.fetchWeatherHourly(lat: 35.5, lon: -78.5, hours: "24")
         
-        viewModel.updateLoadingStatus = {
-            let _ = self.viewModel.isLoading ? self.activityIndicatorStart() : self.activityIndicatorStop()
-        }
-        
         viewModel.showAlertClosure = {
             if let error = self.viewModel.error {
                 print(error.localizedDescription)
@@ -57,7 +53,6 @@ class HomeViewController: UIViewController {
         self.dailyTableView.register(DailyTableViewCell.self, forCellReuseIdentifier: DailyTableViewCell.identifier)
         self.dailyTableView.register(HourlyTableViewCell.self, forCellReuseIdentifier: HourlyTableViewCell.identifier)
         
-        // constraints
         dailyTableView.snp.makeConstraints{(make) in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview()
@@ -65,24 +60,8 @@ class HomeViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
       
-        // backgroundColor
         self.view.backgroundColor = .white
-        
-        // etc
     }
-    
-    private func activityIndicatorStart() {
-        // Code for show activity indicator view
-        // ...
-        print("start")
-    }
-    
-    private func activityIndicatorStop() {
-        // Code for stop activity indicator view
-        // ...
-        print("stop")
-    }
-
 }
 
 // MARK: - talbe view
@@ -116,8 +95,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.weekdayLabel.text = "\(weatherWrapperList[indexPath.row].daily!.validDate)"
             cell.lowTempLabel.text = "\(weatherWrapperList[indexPath.row].daily!.lowTemp)°C"
             cell.highTempLabel.text = "\(weatherWrapperList[indexPath.row].daily!.highTemp)°C"
-    //        cell.weatherImg.image = UIImage(named: "\(dailyWeather[indexPath.row].weather.icon)")
-            cell.weatherImg.image = UIImage(named: "t01d")
+            cell.weatherImg.image = UIImage(named: "\(weatherWrapperList[indexPath.row].daily!.weather.icon)")
             cell.selectionStyle = .none
                     
             return cell

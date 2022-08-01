@@ -50,16 +50,10 @@ class HourlyTableViewCell: UITableViewCell {
     func setUI() {
         contentView.addSubview(hourlyCollectionView)
         
-        contentView.snp.makeConstraints{(make) in
-            make.height.equalTo(160)
-            make.edges.equalToSuperview()
-        }
-        
         hourlyCollectionView.snp.makeConstraints{(make) in
             make.edges.equalToSuperview()
+            make.height.equalTo(150)
         }
-        
-        self.backgroundColor = .systemPink
     }
     
     func setData(weather: [HourlyWeather]) {
@@ -73,7 +67,7 @@ class HourlyTableViewCell: UITableViewCell {
 extension HourlyTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 120)
+        return CGSize(width: 100, height: 135)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,7 +77,9 @@ extension HourlyTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: HourlyCollectionViewCell = hourlyCollectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.identifier, for: indexPath) as! HourlyCollectionViewCell
                 
-        cell.memberNameLabel.text = "\(hourlyWeatherList[indexPath.row].temp)"
+        cell.timeLabel.text = "\(hourlyWeatherList[indexPath.row].timestamp)시"
+        cell.weatherIcon.image = UIImage(named: "\(hourlyWeatherList[indexPath.row].weather.icon)")
+        cell.tempLabel.text = "\(hourlyWeatherList[indexPath.row].temp)°C"
         
         return cell
     }
