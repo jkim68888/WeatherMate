@@ -10,11 +10,10 @@ import SnapKit
 import DropDown
 
 class HomeTableHeaderCell: UITableViewCell {
+    var parentVC: HomeViewController?
+    
     static let identifier = "HomeTableHeaderCell"
-    
-    // MARK: - View Model
-    let viewModel = HomeViewModel(weatherService: WeatherService(), locationService: LocationService())
-    
+
     let dropDown = DropDown()
     
     var dropDownData: [String] = []
@@ -40,10 +39,6 @@ class HomeTableHeaderCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
-        dropDownButton.addTarget(self, action: #selector(dropdownClicked), for: .touchUpInside)
-        dropDownIndex = 0
-        dropDownData = [viewModel.city]
-        dropDown.dataSource = dropDownData
     }
     
     override func layoutSubviews() {
@@ -178,8 +173,6 @@ class HomeTableHeaderCell: UITableViewCell {
         dropDownButton.backgroundColor = UIColor(hexString: "#5F9CF5")
         dropDownButton.layer.cornerRadius = 10
         dropDownButton.semanticContentAttribute = .forceRightToLeft
-        dropDownButton.setTitle(dropDownData[0], for: .normal)
-        locationLabel.text = "대한민국"
         
         // dispatchQueue : 맨 마지막에 실행되는 속성이 있음
         DispatchQueue.main.async() {
@@ -188,6 +181,7 @@ class HomeTableHeaderCell: UITableViewCell {
     }
     
     func setData(weather: DailyWeather) {
+        guard let parentVC = self.parentVC else { return }
         self.dateLabel.text = weather.datetime
         self.todayWeatherTitle.text = "오늘"
         self.todayWeatherIcon.image = UIImage(named: "t01d")
@@ -199,9 +193,18 @@ class HomeTableHeaderCell: UITableViewCell {
         self.todayWeatherClouds.text = "\(weather.clouds)%"
         self.todayWeatherSnowIcon.image = UIImage(named: "snow")
         self.todayWeatherSnow.text = "\(weather.snow)%"
+        
+        dropDownButton.addTarget(self, action: #selector(dropdownClicked), for: .touchUpInside)
+        dropDownIndex = parentVC.viewModel.selectedNumber
+        dropDownData = parentVC.viewModel.locationData.map{ location in return location.city }
+        dropDown.dataSource = dropDownData
+        dropDownButton.setTitle(dropDownData[dropDownIndex], for: .normal)
+        locationLabel.text = parentVC.viewModel.selectedLocationData?.country
     }
     
     func setDropDown() {
+        guard let parentVC = self.parentVC else { return }
+        
         dropDown.show()
         dropDown.cornerRadius = 8
         dropDown.anchorView = dropDownButton
@@ -211,6 +214,7 @@ class HomeTableHeaderCell: UITableViewCell {
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             dropDownButton.setTitle("\(item)", for: .normal)
             dropDownIndex = index
+            parentVC.viewModel.changeSelectedLocationData(selectedNumber: index)
         }
     }
     

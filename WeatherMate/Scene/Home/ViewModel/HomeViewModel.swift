@@ -12,7 +12,11 @@ class HomeViewModel {
     private var weatherService: WeatherService?
     private var locationService: LocationService?
     
+    var selectedNumber: Int = 0
+    
     var locationData: [LocationData] = []
+    
+    var selectedLocationData: LocationData?
     
     var weatherWrapperList: [WeatherWrapper] = []
     
@@ -31,11 +35,6 @@ class HomeViewModel {
     var error: Error? {
         didSet { self.showAlertClosure?() }
     }
-    
-    var city: String = ""
-    var country: String = ""
-    var lat: Float = 0
-    var lon: Float = 0
     
     init(weatherService: WeatherService, locationService: LocationService) {
         self.weatherService = weatherService
@@ -70,16 +69,29 @@ class HomeViewModel {
             }
             
             if let lData = data{
-                self.city = lData[selectedNumber ?? 0].city
-                self.country = lData[selectedNumber ?? 0].country
-                self.lat = lData[selectedNumber ?? 0].lat
-                self.lon = lData[selectedNumber ?? 0].lon
+                self.locationData = lData
+                self.selectedLocationData = lData[selectedNumber ?? 0]
+                if let selectedLocationData = self.selectedLocationData {
+                    self.fetchWeatherDaily(lat: selectedLocationData.lat, lon: selectedLocationData.lon)
+                    self.fetchWeatherHourly(lat: selectedLocationData.lat, lon: selectedLocationData.lon, hours: "24")
+                }
                 
                 return
             }
         })
     }
     
+    func changeSelectedLocationData(selectedNumber: Int) {
+        dailyWeatherData = []
+        hourlyWeatherData = []
+        weatherWrapperList = []
+        self.selectedNumber = selectedNumber
+        selectedLocationData = locationData[selectedNumber]
+        if let selectedLocationData = selectedLocationData {
+            fetchWeatherDaily(lat: selectedLocationData.lat, lon: selectedLocationData.lon)
+            fetchWeatherHourly(lat: selectedLocationData.lat, lon: selectedLocationData.lon, hours: "24")
+        }
+    }
     
     func fetchWeatherDaily(lat: Float, lon: Float) {
         self.weatherService?.requestDaily(lat: lat, lon: lon, completion: { (data, error) in

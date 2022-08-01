@@ -14,7 +14,7 @@ struct WeatherService {
     
     // MARK: - headers
     private let headers: HTTPHeaders = [
-        "X-RapidAPI-Key": "53d628cd7amsh3b0d9201920ec3dp12dc7bjsnaee18bdcc9b6",
+        "X-RapidAPI-Key": "ecc6481f56msh84a0bf82c79660ap13cdd0jsnd694f5d40bdb",
         "X-RapidAPI-Host": "weatherbit-v1-mashape.p.rapidapi.com"
     ]
     

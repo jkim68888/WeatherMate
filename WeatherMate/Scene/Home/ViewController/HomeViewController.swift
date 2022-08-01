@@ -27,8 +27,6 @@ class HomeViewController: UIViewController {
     // MARK: - Networking
     private func requestApi() {
         viewModel.fetchLocationData(selectedNumber: selectedNumber)
-        viewModel.fetchWeatherDaily(lat: viewModel.lat, lon: viewModel.lon)
-        viewModel.fetchWeatherHourly(lat: viewModel.lat, lon: viewModel.lon, hours: "24")
         
         viewModel.showAlertClosure = {
             if let error = self.viewModel.error {
@@ -61,6 +59,8 @@ class HomeViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        dailyTableView.separatorStyle = .none
       
         self.view.backgroundColor = .white
     }
@@ -75,12 +75,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: HomeTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: HomeTableHeaderCell.identifier, for: indexPath) as! HomeTableHeaderCell
-            
+            cell.parentVC = self
             if let daily = weatherWrapperList[indexPath.row].daily {
                 cell.setData(weather: daily)
             }
             
             cell.dropDownIndex = self.selectedNumber
+            cell.selectionStyle = .none
             
             return cell
             
@@ -90,6 +91,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             if let hourly = weatherWrapperList[indexPath.row].hourly {
                 cell.setData(weather: hourly)
             }
+            
+            cell.selectionStyle = .none
             
             return cell
             
