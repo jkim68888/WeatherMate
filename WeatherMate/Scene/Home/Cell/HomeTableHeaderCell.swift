@@ -184,7 +184,7 @@ class HomeTableHeaderCell: UITableViewCell {
         guard let parentVC = self.parentVC else { return }
         self.dateLabel.text = weather.datetime
         self.todayWeatherTitle.text = "오늘"
-        self.todayWeatherIcon.image = UIImage(named: "t01d")
+        self.todayWeatherIcon.image = UIImage(named: weather.weather.icon)
         self.todayWeatherTemp.text = "\(weather.temp)°C"
         self.todayWeatherDescript.text = weather.weather.description
         self.todayWeatherWindSpeedIcon.image = UIImage(named: "wind")

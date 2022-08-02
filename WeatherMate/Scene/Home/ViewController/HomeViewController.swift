@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast_Swift
 
 class HomeViewController: UIViewController {
     private let dailyTableView = UITableView()
@@ -31,6 +32,7 @@ class HomeViewController: UIViewController {
         viewModel.showAlertClosure = {
             if let error = self.viewModel.error {
                 print(error.localizedDescription)
+                self.view.makeToast("데이터를 로드할 수 없습니다. 사용중인 Rapid api는 하루에 100번까지만 호출 가능합니다. 내일 다시 이용해주세요.", duration: 60.0, position: .top)
             }
         }
         
