@@ -1,4 +1,4 @@
-# ![29](https://user-images.githubusercontent.com/75922558/183387177-a923c690-943f-4739-b6c9-45b742bd5126.png) WeatherMate
+# WeatherMate
 
 `위치`를 선택하면 해당 위치의 `날씨`를 `시간과 요일`에 따라 보여주는 ios 어플리케이션.
 
@@ -30,8 +30,8 @@
 
 - 기간 : 2022.07.27 ~ 2022.08.02
 - 언어 : Swift5
-- 디자인패턴 : [MVVM](#mvvm-패턴)
-- Open API : [Rapid Api](#📍-오픈소스-api)
+- 디자인패턴 : [MVVM](#-mvvm-패턴)
+- Open API : [Rapid Api](#-오픈소스-api)
 - http 통신 라이브러리 : Alamofire
 - UI 라이브러리 : Sanpkit 5.6.0, Dropdown, Toast-Swift 5.0.1
 - library dependancy manager: Cocoapods
