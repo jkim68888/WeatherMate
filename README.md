@@ -35,7 +35,3 @@
 - http 통신 라이브러리 : Alamofire
 - UI 라이브러리 : Sanpkit 5.6.0, Dropdown, Toast-Swift 5.0.1
 - library dependancy manager: Cocoapods
-
-## RxSwift 적용
-
-- 기간 : 2022.08.05 ~
