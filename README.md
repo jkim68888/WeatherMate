@@ -49,7 +49,7 @@
 
 > Model - View - ViewModel
 
-![WeatherMate_MVVM](https://user-images.githubusercontent.com/75922558/183399149-7f6c6536-46a0-4eb3-bc39-28da337f7874.png)
+<!-- ![WeatherMate_MVVM](https://user-images.githubusercontent.com/75922558/183399149-7f6c6536-46a0-4eb3-bc39-28da337f7874.png) !-->
 
 ## 📍 오픈소스 API
 
